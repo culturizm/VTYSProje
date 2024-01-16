@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Destinations</title>
+  <link rel="icon" href="./files/logo.png" />
+  <!-- Composite Pattern -->
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+
+  <!-- HTML dosyasında script etiketi -->
+</head>
+
+<body class="location-body">
+  <nav>
+    <a class="containerr" href="/views/index.html">
+      <img src="./files/logo.png" class="logo" alt="Logo" title="culturizm">
+      <span class="siteAdi">Culturizm</span>
+    </a>
+
+    <ul class="navbar">
+      <li>
+        <a href="/views/index.html">Ana menü</a>
+        <a href="/views/muze.html">Müzeler</a>
+        <a href="/views/otel.html">Oteller</a>
+        <a href="/views/iletişim.html">İletişim</a>
+        <a href="/views/hakkında.html">Hakkımızda</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="location-section">
+    <div class="location-heading">
+      <h1>Türkiyedeki <span>Oteller</span></h1>
+    </div>
+
+
+    <div>
+      <input type="text" id="yazi" name="yazi" placeholder="Şehir Giriniz.." />
+      <button id="giris" type="submit" onclick="aktar()">Ara</button>
+    </div>
+
+    <div class="location-detail" id="kashmir">
+      <h1 id="baslik">------</h1>
+      <div id="responseData"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+
+  <section class="footer">
+    <div class="foot">
+      <div class="footer-content">
+        <div class="footlinks">
+          <h4>Linkler</h4>
+          <ul>
+            <li><a href="./muze.html">Müzeler</a></li>
+            <li><a href="./otel.html">Oteller</a></li>
+            <!-- <li><a href="#">Tur Rehberim</a></li> -->
+          </ul>
+        </div>
+
+        <div class="footlinks">
+          <h4>Bağlantılar</h4>
+          <div class="social">
+            <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-instagram"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-youtube"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-wordpress"></i></a>
+            <a href="#" target="_blank"><i class="bx bxl-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script>
+
+      function aktar() {
+        // Input değerini al
+        var inputDegeri = document.getElementById("yazi").value;
+        document.getElementById("baslik").innerHTML = inputDegeri;
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+          if (this.readyState === 4) {
+            if (this.status === 200) {
+              var jsonData = JSON.parse(this.responseText);
+              displayData(jsonData);
+            } else {
+              document.getElementById("responseData").innerHTML =
+                "Error: " + this.status;
+            }
+          }
+        });
+
+        xhr.open(
+          "GET",
+          "https://www.nosyapi.com/apiv2/getTurkey?id=9040&city=" +
+          encodeURIComponent(inputDegeri) +
+          "&country="
+        );
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader(
+          "Authorization",
+          "Bearer bljtVhrRTNEH8iNnuCn3DpzAazONStnwEbMQNEg5M6PifMCeTSdQqsdr0U7g"
+        );
+        xhr.send();
+
+        function displayData(data) {
+          var responseContainer = document.getElementById("responseData");
+          var html = "<ul>";
+          for (var i = 0; i < data.data.length; i++) {
+            var item = data.data[i];
+            html += "<li>";
+            //html += "<img src='./files/2a.jpg' alt='Food Services'><br>";
+            html += "<strong>İsmi:</strong> " + item.name + "<br>";
+            html +=
+              "<strong>Detay:</strong> "  +
+              "<a href=https://tr.wikipedia.org/wiki/" +
+              encodeURIComponent(item.name) +
+              " target=_blank>  Detaylar..</a><br>";
+            // html +=
+            //   "<strong>Çalışma Saatleri:</strong> " +
+            //   item.calismaSaatleri +
+            //   "<br>";
+            // html +=
+            //   "<strong>Giriş Detayı:</strong> " + item.girisDetay + "<br>";
+            html +=
+              "<strong>Mahalle:</strong><a href =https://www.google.com/maps?q=" +
+              encodeURIComponent(item.latitude) +
+              "," +
+              encodeURIComponent(item.longitude) +
+              " target=_blank>" +
+              item.street +
+              "</a> <br>";
+            html += "<strong>Sokak:</strong> " + item.streetv2 + "<br>";
+            html += "<strong>Telefon:</strong> " + item.phone + "<br>";
+            html +=
+              "<strong>Web Sitesi:</strong> " + `<a href=https://${item.website} target=_blank>${item.website}</a>` + "<br>";
+            html += "<strong>Şehir:</strong> " + item.city + "<br>";
+            html += "<strong>İlçe:</strong> " + item.country + "<br> ";
+            html += "</li> <br> <br> <br> <br>";
+          }
+          html += "</ul>";
+          responseContainer.innerHTML = html;
+        }
+      }
+    </script> -->
+    <script>
+
+
+      function aktar() {
+        var city = document.getElementById('yazi').value
+        if (city.length > 0) {
+          var capitalizedForm = city.charAt(0).toUpperCase() + city.slice(1);
+        }
+
+        fetch("http://localhost:3000/otel", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            city: capitalizedForm
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            var responseContainer = document.getElementById("responseData");
+            var html = "<ul>";
+            for (var i = 0; i < data.length; i++) {
+              var item = data[i];
+              html += "<li>";
+              //html += "<img src='./files/2a.jpg' alt='Food Services'><br>";
+              html += "<strong>İsmi:</strong> " + item.name + "<br>";
+              html +=
+                "<strong>Detay:</strong> " +
+                "<a href=https://tr.wikipedia.org/wiki/" +
+                encodeURIComponent(item.name) +
+                " target=_blank>  Detaylar..</a><br>";
+              // html +=
+              //   "<strong>Çalışma Saatleri:</strong> " +
+              //   item.calismaSaatleri +
+              //   "<br>";
+              // html +=
+              //   "<strong>Giriş Detayı:</strong> " + item.girisDetay + "<br>";
+              html +=
+                "<strong>Mahalle:</strong><a href =https://www.google.com/maps?q=" +
+                encodeURIComponent(item.latitude) +
+                "," +
+                encodeURIComponent(item.longitude) +
+                " target=_blank>" +
+                item.street +
+                "</a> <br>";
+              html += "<strong>Sokak:</strong> " + item.streetv2 + "<br>";
+              html += "<strong>Telefon:</strong> " + item.phone + "<br>";
+              html +=
+                "<strong>Web Sitesi:</strong> " + `<a href=https://${item.website} target=_blank>${item.website}</a>` + "<br>";
+              html += "<strong>Şehir:</strong> " + item.city + "<br>";
+              html += "<strong>İlçe:</strong> " + item.country + "<br> ";
+              html += "</li> <br> <br> <br> <br>";
+            }
+            html += "</ul>";
+            responseContainer.innerHTML = html;
+          })
+          .catch(err => console.log(err.message));
+
+        console.log(capitalizedForm);
+      }
+
+    </script>
+    <div class="end">
+      <p>Copyright © 2023 Culturizm Travels All Rights Reserved.<br>Website developed by: fourTech</p>
+    </div>
+  </section>
+</body>
+
+</html>
